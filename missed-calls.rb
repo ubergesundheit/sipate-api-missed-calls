@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require "net/http"
 require "active_support/core_ext/hash"
 require "mandrill"
