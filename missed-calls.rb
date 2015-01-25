@@ -33,7 +33,7 @@ parsed_response = Hash.from_xml(res.body)
 xml_calls = parsed_response["methodResponse"]["params"]["param"]["value"]["struct"]["member"].select { |h| h["name"] == "History" }[0]["value"]["array"]["data"]["value"]
 unless xml_calls == nil
   calls = xml_calls.map do |struct|
-    member = struct["struct"]["member"]
+    member = struct.select { |s| s.class == Hash }[0]["member"]
     {
       timestamp: extract_property("Timestamp", member),
       caller_id: extract_property("RemoteUri", member)[/\d+|anonymous/]
