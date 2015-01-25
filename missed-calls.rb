@@ -14,8 +14,8 @@ uri = URI.parse("https://samurai.sipgate.net/RPC2")
 time_before = 6 * 60
 
 # This shit is way too verbose :O
-# request_body = "<methodCall><methodName>samurai.HistoryGetByDate</methodName><params><param><value><struct><member><name>StatusList</name><value><array><data><value><string>missed</string></value></data></array></value></member><member><name>PeriodStart</name><value><string>#{(Time.now - time_before).strftime("%FT%T%:z")}</string></value></member></struct></value></param></params></methodCall>"
-request_body = "<methodCall><methodName>samurai.HistoryGetByDate</methodName><params><param><value><struct><member><name>StatusList</name><value><array><data><value><string>missed</string></value></data></array></value></member></struct></value></param></params></methodCall>"
+request_body = "<methodCall><methodName>samurai.HistoryGetByDate</methodName><params><param><value><struct><member><name>StatusList</name><value><array><data><value><string>missed</string></value></data></array></value></member><member><name>PeriodStart</name><value><string>#{(Time.now - time_before).strftime("%FT%T%:z")}</string></value></member></struct></value></param></params></methodCall>"
+# request_body = "<methodCall><methodName>samurai.HistoryGetByDate</methodName><params><param><value><struct><member><name>StatusList</name><value><array><data><value><string>missed</string></value></data></array></value></member></struct></value></param></params></methodCall>"
 
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
@@ -26,7 +26,7 @@ req.content_type = "text/xml"
 req.basic_auth(ENV["SIPGATE_USERNAME"],ENV["SIPGATE_PASSWORD"])
 
 res = http.request(req)
-puts res.body
+
 parsed_response = Hash.from_xml(res.body)
 
 # WTF xml..
